@@ -61,7 +61,7 @@ export function Carrosel() {
                   {!hasError ? (
                     <Image
                       src={encodedSrc}
-                      alt={`Banner ${index + 1}`}
+                      alt={index === 0 ? "Banner promocional principal" : `Banner promocional ${index + 1}`}
                       fill
                       className="object-cover md:object-cover"
                       priority={index === 0}

@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import produtos from "../../../produtos.json";
 import { useCart } from "@/context/CartContext";
-import { Search, Heart, SlidersHorizontal, ChevronDown } from "lucide-react";
+import { Search, Heart, SlidersHorizontal, ChevronDown, Package } from "lucide-react";
 
 // Função para gerar atributos de luxo virtuais (mantida igual)
 const getProductAttributes = (id: number, nome: string) => {
@@ -45,6 +45,7 @@ function ProdutosContent() {
   const [visibleCount, setVisibleCount] = useState(12);
   const [favorites, setFavorites] = useState<number[]>([]);
   const [showFiltersMobile, setShowFiltersMobile] = useState(false);
+  const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
 
   // Inicializa coleção da URL
   useEffect(() => {
@@ -173,8 +174,10 @@ function ProdutosContent() {
             type="button"
             onClick={() => setShowFiltersMobile(!showFiltersMobile)}
             className="lg:hidden flex items-center justify-center gap-2 border border-[#C5A059]/30 py-3 text-xs tracking-widest text-[#E8E4DF] hover:bg-[#C5A059]/5 transition-colors cursor-pointer"
+            aria-expanded={showFiltersMobile}
+            aria-controls="mobile-filters"
           >
-            <SlidersHorizontal className="w-4 h-4 text-[#C5A059]" />
+            <SlidersHorizontal className="w-4 h-4 text-[#C5A059]" aria-hidden="true" />
             FILTROS E ORDENAÇÃO
           </button>
 
@@ -234,7 +237,7 @@ function ProdutosContent() {
         </div>
 
         {showFiltersMobile && (
-          <div className="lg:hidden bg-[#121211] border border-[#C5A059]/20 p-6 space-y-4 rounded-sm animate-fade-in">
+          <div id="mobile-filters" className="lg:hidden bg-[#121211] border border-[#C5A059]/20 p-6 space-y-4 rounded-sm animate-fade-in">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="space-y-1">
                 <label className="text-[10px] text-[#E8E4DF]/40 uppercase tracking-widest">Coleção</label>
@@ -343,22 +346,31 @@ function ProdutosContent() {
                     type="button"
                     onClick={() => toggleFavorite(produto.id)}
                     className="absolute top-3 right-3 z-10 p-2 bg-[#0A0A0A]/80 border border-[#C5A059]/20 hover:border-[#C5A059] rounded-full text-[#C5A059] transition-all duration-300 focus:outline-none cursor-pointer"
-                    aria-label={isFav ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+                    aria-label={isFav ? `Remover ${produto.nome} dos favoritos` : `Adicionar ${produto.nome} aos favoritos`}
                   >
                     <Heart
                       className={`w-3.5 h-3.5 transition-transform duration-300 active:scale-125 ${
                         isFav ? "fill-[#C5A059]" : "fill-transparent"
                       }`}
+                      aria-hidden="true"
                     />
                   </button>
 
-                  <Image
-                    src={produto.imagem}
-                    alt={produto.nome}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                    className="object-cover transition-transform duration-800ms ease-out group-hover:scale-[1.04]"
-                  />
+                  {produto.imagem && !imageErrors[produto.id] ? (
+                    <Image
+                      src={produto.imagem}
+                      alt={`Foto do perfume ${produto.nome}`}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      className="object-cover transition-transform duration-800ms ease-out group-hover:scale-[1.04]"
+                      onError={() => setImageErrors((prev) => ({ ...prev, [produto.id]: true }))}
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#121211] text-[#C5A059]/40">
+                      <Package className="w-12 h-12 mb-2 stroke-[1]" aria-hidden="true" />
+                      <span className="text-[10px] uppercase tracking-widest font-light">Imagem Indisponível</span>
+                    </div>
+                  )}
 
                   <div className="absolute inset-0 bg-[#0A0A0A]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center p-6 text-center">
                     <span className="text-[9px] tracking-[0.25em] text-[#C5A059] uppercase font-light mb-2">
@@ -397,6 +409,7 @@ function ProdutosContent() {
                     type="button"
                     onClick={() => handleAddToCart(produto)}
                     className="w-full py-3 border border-[#C5A059] text-[9px] font-semibold uppercase tracking-[0.25em] text-[#C5A059] hover:bg-[#C5A059] hover:text-[#0A0A0A] transition-all duration-500 focus:outline-none cursor-pointer"
+                    aria-label={`Adicionar ${produto.nome} à sacola de compras`}
                   >
                     Adicionar à Sacola
                   </button>

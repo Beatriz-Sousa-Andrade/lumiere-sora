@@ -97,6 +97,7 @@ export default function Home() {
                 <Link 
                   href={`/produtos?colecao=${encodeURIComponent(item.query)}`}
                   className="mt-8 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.25em] text-[#E8E4DF] hover:text-[#C5A059] border-b border-[#C5A059]/30 hover:border-[#C5A059] pb-1 transition-all duration-300 font-light"
+                  aria-label={`Conhecer a coleção ${item.title}`}
                 >
                   Conhecer Coleção <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                 </Link>
@@ -190,6 +191,7 @@ export default function Home() {
               <input 
                 type="email" 
                 placeholder="SEU ENDEREÇO DE E-MAIL" 
+                aria-label="Seu endereço de e-mail para newsletter"
                 className="flex-1 bg-[#0A0A0A] border border-[#C5A059]/20 px-4 py-3 text-xs tracking-widest text-[#E8E4DF] placeholder-[#E8E4DF]/30 focus:border-[#C5A059] outline-none transition-colors"
                 required
               />

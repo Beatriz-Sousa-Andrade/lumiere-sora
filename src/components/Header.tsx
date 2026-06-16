@@ -22,9 +22,10 @@ export default function Header() {
         <button 
           className="md:hidden p-2 -ml-2 text-[#E8E4DF]/80 hover:text-[#C5A059] transition-colors"
           onClick={() => setIsMobileMenuOpen(true)}
-          aria-label="Abrir menu"
+          aria-label="Abrir menu principal"
+          aria-expanded={isMobileMenuOpen}
         >
-          <Menu className="w-6 h-6 stroke-[1.5]" />
+          <Menu className="w-6 h-6 stroke-[1.5]" aria-hidden="true" />
         </button>
 
         {/* Logo e Nome - Centralizado no mobile, alinhado à esquerda no desktop */}
@@ -37,6 +38,7 @@ export default function Header() {
               src="/logo/logo.png"
               alt="Logo Lumière Sora"
               className="w-full h-full object-contain filter brightness-110"
+              aria-hidden="true"
             />
           </div>
           <div className="flex flex-col hidden sm:flex">
@@ -81,9 +83,9 @@ export default function Header() {
           <button
             onClick={() => setIsCartOpen(true)}
             className="relative p-2 text-[#E8E4DF]/80 hover:text-[#C5A059] transition-colors duration-300 focus:outline-none cursor-pointer"
-            aria-label="Abrir carrinho"
+            aria-label="Abrir carrinho de compras"
           >
-            <ShoppingBag className="w-5 h-5 stroke-[1.5]" />
+            <ShoppingBag className="w-5 h-5 stroke-[1.5]" aria-hidden="true" />
             {cartCount > 0 && (
               <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#C5A059] text-[#0A0A0A] text-[9px] font-bold rounded-full flex items-center justify-center animate-fade-in">
                 {cartCount}
@@ -107,15 +109,16 @@ export default function Header() {
           {/* Drawer Lateral */}
           <div className="fixed inset-y-0 left-0 z-[60] w-[80%] max-w-sm bg-[#0A0A0A] border-r border-[#C5A059]/20 shadow-2xl flex flex-col p-6 md:hidden animate-fade-in-up">
             <div className="flex justify-between items-center border-b border-[#C5A059]/20 pb-4">
-              <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3">
-                <img src="/logo/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
+              <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3" aria-label="Ir para a Página Inicial">
+                <img src="/logo/logo.png" alt="" className="w-8 h-8 object-contain" aria-hidden="true" />
                 <h1 className="text-base font-medium tracking-[0.25em] text-[#C5A059] font-serif">LUMIÈRE</h1>
               </Link>
               <button 
                 className="p-2 text-[#E8E4DF]/80 hover:text-[#C5A059]"
                 onClick={() => setIsMobileMenuOpen(false)}
+                aria-label="Fechar menu principal"
               >
-                <X className="w-6 h-6 stroke-[1.5]" />
+                <X className="w-6 h-6 stroke-[1.5]" aria-hidden="true" />
               </button>
             </div>
             
