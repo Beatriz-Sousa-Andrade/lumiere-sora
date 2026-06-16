@@ -131,16 +131,7 @@ function ProdutosContent() {
   return (
     <main className="flex-1 py-16 px-6 max-w-7xl mx-auto w-full font-sans">
       
-      {/* BOTÃO DE TESTE - Remove depois que os outros funcionarem */}
-      <div className="fixed bottom-4 right-4 z-50">
-        <button
-          type="button"
-          onClick={() => alert("✅ Clique funcionou! Os botões principais devem funcionar também.")}
-          className="bg-[#C5A059] text-[#0A0A0A] px-4 py-2 rounded-full text-xs font-bold shadow-lg hover:bg-[#8B7340] transition-colors"
-        >
-          Teste de Clique
-        </button>
-      </div>
+
 
       {/* Cabeçalho da Página */}
       <div className="text-center mb-16 space-y-4 animate-fade-in">

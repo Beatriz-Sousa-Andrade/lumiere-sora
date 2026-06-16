@@ -54,7 +54,7 @@ export default function Home() {
             <h2 className="text-2xl md:text-3xl font-light tracking-[0.25em] text-[#C5A059] font-serif">
               COLEÇÕES EXCLUSIVAS
             </h2>
-            <div className="relative w-16 h-[1px] bg-[#C5A059]/50 mx-auto" />
+            <div className="relative w-16 h-1px bg-[#C5A059]/50 mx-auto" />
             <p className="text-[10px] md:text-xs text-[#E8E4DF]/50 tracking-[0.2em] uppercase font-light">
               Escolha a família de fragrâncias que expressa seu estilo
             </p>
@@ -89,7 +89,7 @@ export default function Home() {
                   <h3 className="text-base tracking-[0.2em] font-medium font-serif uppercase text-[#C5A059]">
                     {item.title}
                   </h3>
-                  <p className="text-xs text-[#E8E4DF]/60 font-light leading-relaxed max-w-[240px] mx-auto">
+                  <p className="text-xs text-[#E8E4DF]/60 font-light leading-relaxed max-w-240px mx-auto">
                     {item.desc}
                   </p>
                 </div>
@@ -156,7 +156,7 @@ export default function Home() {
         {/* Seção de Oferta/Call to Action */}
         <section className="bg-[#0A0A0A] py-28 px-6 text-center relative overflow-hidden">
           {/* Glow sutil */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#C5A059]/3 blur-[120px] rounded-full pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-500px h-500px bg-[#C5A059]/3 blur-[120px] rounded-full pointer-events-none" />
 
           <div className="max-w-2xl mx-auto space-y-8 relative z-10">
             <span className="text-[10px] tracking-[0.3em] uppercase text-[#C5A059]">Fragrâncias Atemporais</span>

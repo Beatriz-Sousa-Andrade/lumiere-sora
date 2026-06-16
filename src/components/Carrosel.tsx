@@ -57,13 +57,13 @@ export function Carrosel() {
 
             return (
               <CarouselItem key={index}>
-                <div className="relative w-full h-[260px] md:h-[400px] overflow-hidden bg-[#0A0A0A]">
+                <div className="relative w-full h-[180px] sm:h-[260px] md:h-[400px] lg:h-[500px] overflow-hidden bg-[#0A0A0A]">
                   {!hasError ? (
                     <Image
                       src={encodedSrc}
                       alt={`Banner ${index + 1}`}
                       fill
-                      className="object-cover"
+                      className="object-cover md:object-cover"
                       priority={index === 0}
                       onError={() => handleImageError(index)}
                     />
