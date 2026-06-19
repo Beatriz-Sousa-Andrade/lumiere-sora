@@ -1,7 +1,7 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
-import { X, Plus, Minus, Trash2, ShoppingBag, Check } from "lucide-react";
+import { X, Plus, Minus, Trash2, ShoppingBag, Check, Package } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
@@ -18,6 +18,7 @@ export default function CartDrawer() {
 
   const [checkoutStep, setCheckoutStep] = useState<"idle" | "loading" | "success">("idle");
   const [mounted, setMounted] = useState(false);
+  const [imageErrors, setImageErrors] = useState<Record<string | number, boolean>>({});
 
   useEffect(() => {
     setMounted(true);
@@ -170,14 +171,21 @@ export default function CartDrawer() {
               <div className="divide-y divide-[#C5A059]/10">
                 {cartItems.map((item) => (
                   <div key={item.id} className="py-4 flex gap-4 first:pt-0 last:pb-0">
-                    <div className="relative w-20 h-24 bg-[#161514] border border-[#C5A059]/10 shrink-0">
-                      <Image
-                        src={item.imagem}
-                        alt={item.nome}
-                        fill
-                        className="object-cover p-1"
-                        sizes="80px"
-                      />
+                    <div className="relative w-20 h-24 bg-[#161514] border border-[#C5A059]/10 shrink-0 overflow-hidden">
+                      {item.imagem && !imageErrors[item.id] ? (
+                        <Image
+                          src={item.imagem}
+                          alt={item.nome}
+                          fill
+                          className="object-cover p-1"
+                          sizes="80px"
+                          onError={() => setImageErrors((prev) => ({ ...prev, [item.id]: true }))}
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#121211] text-[#C5A059]/40">
+                          <Package className="w-6 h-6 stroke-[1]" aria-hidden="true" />
+                        </div>
+                      )}
                     </div>
                     
                     <div className="flex-1 flex flex-col justify-between py-1">
