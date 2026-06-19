@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import produtos from "../../../produtos.json";
 import { useCart } from "@/context/CartContext";
-import { Search, Heart, SlidersHorizontal, ChevronDown, Package } from "lucide-react";
+import { Search, Heart, SlidersHorizontal, ChevronDown, Package, CheckCircle, XCircle } from "lucide-react";
 
 // Função para gerar atributos de luxo virtuais (mantida igual)
 const getProductAttributes = (id: number, nome: string) => {
@@ -46,6 +46,12 @@ function ProdutosContent() {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [showFiltersMobile, setShowFiltersMobile] = useState(false);
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
+  const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
+
+  const showToast = (message: string, type: "success" | "error") => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
 
   // Inicializa coleção da URL
   useEffect(() => {
@@ -122,10 +128,10 @@ function ProdutosContent() {
     console.log("Tentando adicionar ao carrinho:", produto.nome);
     if (addToCart) {
       addToCart({ id: produto.id, nome: produto.nome, preco: produto.preco, imagem: produto.imagem });
-      alert(`✅ ${produto.nome} adicionado à sacola!`);
+      showToast(`${produto.nome} adicionado à sacola!`, "success");
     } else {
       console.error("addToCart não está disponível no CartContext");
-      alert("Erro: carrinho não inicializado. Contate o suporte.");
+      showToast("Erro: carrinho não inicializado. Contate o suporte.", "error");
     }
   };
 
@@ -429,6 +435,14 @@ function ProdutosContent() {
           >
             Carregar Mais Fragrâncias
           </button>
+        </div>
+      )}
+
+      {/* Toast Notification */}
+      {toast && (
+        <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-6 py-4 shadow-xl border animate-fade-in-up transition-all duration-300 ${toast.type === 'success' ? 'bg-[#0A0A0A] border-[#C5A059]/50 text-[#C5A059]' : 'bg-[#0A0A0A] border-red-500/50 text-red-400'}`}>
+          {toast.type === 'success' ? <CheckCircle className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+          <span className="text-[10px] sm:text-xs uppercase tracking-widest">{toast.message}</span>
         </div>
       )}
     </main>
